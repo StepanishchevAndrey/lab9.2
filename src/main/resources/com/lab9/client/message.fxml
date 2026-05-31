@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab9.client.MessageClient">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
 
-</AnchorPane>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10"/>
+        </padding>
+        <Label text="Уровень защиты:"/>
+        <ComboBox fx:id="levelCombo" value="Уровень 0: Без защиты (текст, прямой IP)">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Уровень 0: Без защиты (текст, прямой IP)"/>
+                    <String fx:value="Уровень 1: Прокси (скрытие IP, текст)"/>
+                    <String fx:value="Уровень 2: Туннель Protobuf (скрытие содержимого)"/>
+                    <String fx:value="Уровень 3: Прокси + туннель (полное скрытие)"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <Button fx:id="connectBtn" text="Подключиться" onAction="#connect"/>
+        <Label fx:id="statusLabel" text="Не подключено" style="-fx-text-fill: red;"/>
+    </HBox>
+
+    <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
+        <!-- Вкладка 1: Основной сценарий -->
+        <Tab text="Основной сценарий" closable="false">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Label text="ОСНОВНОЙ СЦЕНАРИЙ" style="-fx-font-weight: bold;"/>
+                
+                <Label text="Имя:"/>
+                <TextField fx:id="usernameField" promptText="Ваше имя"/>
+                
+                <Label text="Отправить:"/>
+                <TextField fx:id="targetField" promptText="Кому отправить сообщение"/>
+                
+                <TextArea fx:id="messageArea" promptText="Текст сообщения" prefHeight="80"/>
+                
+                <HBox spacing="10">
+                    <Button fx:id="registerBtn" text="Регистрация" onAction="#register"/>
+                    <Button fx:id="sendBtn" text="Отправить сообщение" onAction="#sendMessage"/>
+                    <Button fx:id="inboxBtn" text="Получить сообщения" onAction="#getInbox"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <Tab text="Лайки" closable="false">
+            <VBox spacing="10">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Label text="АНОНИМНЫЕ ЛАЙКИ" style="-fx-font-weight: bold;"/>
+                
+                <TextField fx:id="likeTargetField" promptText="Кому поставить лайк"/>
+                
+                <HBox spacing="10">
+                    <Button fx:id="likeBtn" text="Поставить лайк" onAction="#sendLike"/>
+                    <Button fx:id="topBtn" text="Показать топ" onAction="#showTop"/>
+                    <Button fx:id="hideBtn" text="Скрыть из топа" onAction="#hideUser"/>
+                </HBox>
+            </VBox>
+        </Tab>
+    </TabPane>
+
+    <Label text="Лог:"/>
+    <TextArea fx:id="logArea" editable="false" prefHeight="200"/>
+</VBox>

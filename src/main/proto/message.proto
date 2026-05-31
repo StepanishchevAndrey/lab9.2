@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.lab9.common;
+
+option java_package = "com.lab9.common";
+option java_outer_classname = "MessageProtocol";
+
+message Message {
+  string command = 1;
+  string username = 2;
+  string target = 3;
+  string content = 4;
+  string response = 5;
+  repeated string items = 6;
+}
